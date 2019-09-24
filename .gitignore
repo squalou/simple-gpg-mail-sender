@@ -1,0 +1,6 @@
+_gpg
+build
+dist
+*.log
+GpgMail.spec
+__pycache__
