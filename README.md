@@ -1,23 +1,25 @@
 # simple-gpg-mail-sender
 
-a python minimalistic tk gui for sending securely crypted attachements
+a python minimalistic tkinter GUI for sending securely crypted attachements
 
 ## security for noobs
 
 Imagine a non-technical person, wanting to send to you securely a document. Say .. your grandmother, or some of you customers depending on the situation.
 
-For those situation, here's a quick and not-so-dorty solution.
+For those situation, here's a quick and not-so-dirty solution.
 
 - customize two lines in this project to fit you needs ( = your GPG key id, your associated email)
 - install gpg on the person's computer (windows / linux tested)
 - install this python script on the computer (see below)
 - run it, add a file, send, done !
 
-The idea here is to have one custome tool dedicated to send emails securely to ONE recipient, hardcoded in the tool ... because it's my usecase.
+The idea here is to have one tailor-made tool dedicated to send emails securely to ONE recipient, hardcoded in the tool ... because it's my usecase.
 
 ## disclaimer
 
-target audience was initially french only, so most mesasges are hardcoded in french.
+Target audience was initially french only, so most messages are hardcoded in french. Deal with it.
+
+It's not nice, maybe even on the ugly side, probably full of issues and limitations, but works for me and is straightforward to use. Mission accomplished :)
 
 ## prerequisites for you : the email recipient
 
@@ -41,7 +43,7 @@ GPG4Win is [available here](https://gpg4win.org/download.html), install it.
 
 On a computer *using the same OS as the target OS* : install python >= 3.6
 
-Create a virtualenc, run `pip install -r requirements.txt`
+Create a virtualenv, run `pip install -r requirements.txt`
 
 Check it looks like it works : python GpgMail.py
 
@@ -55,7 +57,7 @@ GPG_KEY_ID = "0x1254798657465446"
 GPG_DEST_EMAIL = "someone@nowhere.com"
 ```
 
-***note** the `Ox` in front of the key id, don't forget it or nothing will work.
+**note** the `Ox` in front of the key id, don't forget it or nothing will work.
 
 ## package it
 
@@ -66,7 +68,7 @@ pip install pyinstaller
 pyinstaller -w GpgMail.py
 
 cd dist
-gpgmail.zip GpgMail
+zip -r gpgmail.zip GpgMail
 
 ```
 
@@ -95,12 +97,22 @@ Easy as 1, 2, 3
 
 - 1 : add a file using the dedicated button
 - 2 : add an object to the mail, and maybe some text
-- 3 click send
+- 3 : click send
 
 File is crypted, mail is sent, and only the recipient can decipher it. Profit.
+
+#### first run
+
+![first run](./gpgmail-first-run.png)
+
+#### main window
+
+![main window](./gpgmail-main-window.png)
 
 ## Troubleshooting
 
 logs are available alongside GpgMail executable (`secure-mail.log`)
 
-You can increse verbosity by changing loglevel : in `_gpg\secure-mail.conf` change log_level to `10` for debug. (levels are standard python logging values : 50 for less verbose to 10 for debug, 20 is INFO which is also the default value)
+You can increase verbosity by changing loglevel : in `_gpg\secure-mail.conf` change log_level to `10` for DEBUG. (levels are standard python logging values : 50 for less verbose to 10 for DEBUG, 20 is INFO which is also the default value)
+
+In case gpg cannot fetch the keys, check that your DNS nameserver is 8.8.8.8 (or change it to this at least for one run). Don't ask me why, but other nameservers, such as local relay nameservers may cause unexpected issues. Using Linux, it means changing `/etc/resolv.conf` in most (?) cases.
